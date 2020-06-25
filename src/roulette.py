@@ -1,19 +1,14 @@
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
 class Outcome:
-    def __init__(self, name: str, odds: int) -> None:
-        self.name = name
-        self.odds = odds
-
-    def __str__(self):
-        return f"{self.name}, {self.odds}"
-
-    def __repr__(self):
-        return f"{self.__class__.__name__:s} : name={self.name!r}, odds={self.odds!r}"
-
-    def __eq__(self, other):
-        return self.name == other.name
-
-    def __hash__(self):
-        return hash(self.name)
+    name: str
+    odds: int
 
     def winAmount(self, amount: int):
         return self.odds * amount
+
+
+class Bin(frozenset):
+    pass
