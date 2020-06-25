@@ -3,6 +3,10 @@ from src import roulette
 
 
 class TestOutcome(TestCase):
-    def testOutcome(self):
+    def testStr(self):
         o = roulette.Outcome('red', 1)
-        self.assertEqual(str(o), "blue  ,1")
+        self.assertEqual(str(o), "red, 1")
+
+    def testRepr(self):
+        o = roulette.Outcome('red', 1)
+        self.assertEqual(repr(o), "Outcome : name='red', odds=1")
