@@ -8,3 +8,12 @@ class Outcome:
 
     def __repr__(self):
         return f"{self.__class__.__name__:s} : name={self.name!r}, odds={self.odds!r}"
+
+    def __eq__(self, other):
+        return self.name == other.name
+
+    def __hash__(self):
+        return hash(self.name)
+
+    def winAmount(self, amount: int):
+        return self.odds * amount
