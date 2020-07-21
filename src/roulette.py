@@ -8,6 +8,7 @@ class BetOdds(Enum):
     SPLIT = 17
     STREET = 11
     CORNER = 8
+    LINE = 5
 
 
 @dataclass(frozen=True)
@@ -83,4 +84,19 @@ class BinBuilder():
                 self.wheel.addOutcome(num, street)
 
     def cornerBets(self):
-        pass
+        for i in range(1, 32, 3):
+            for j in range(2):
+                cornerNums = self.__createCornerFromTopLeft(i + j)
+                corner = Outcome(f"corner {str(cornerNums)}", BetOdds.CORNER)
+                for num in cornerNums:
+                    self.wheel.addOutcome(num, corner)
+
+    def __createCornerFromTopLeft(self, i):
+        return i, i + 1, i + 3, i + 4
+
+    def lineBets(self):
+        for i in range(1, 32, 3):
+            lineNums = tuple(i + j for j in range(6))
+            line = Outcome(f"line {str(lineNums)}", BetOdds.LINE)
+            for num in lineNums:
+                self.wheel.addOutcome(num, line)

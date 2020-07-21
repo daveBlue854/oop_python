@@ -50,12 +50,25 @@ class testBinBuilder(TestCase):
         twoBin = wheel.get(2)
         fiveBin = wheel.get(5)
 
-        self.assertTrue(Outcome("corner (1, 2, 4, 5)", BetOdds.STREET) in oneBin)
+        self.assertTrue(Outcome("corner (1, 2, 4, 5)", BetOdds.CORNER) in oneBin)
 
-        self.assertTrue(Outcome("corner (1, 2, 4, 5)", BetOdds.STREET) in twoBin)
-        self.assertTrue(Outcome("corner (2, 3, 5, 6)", BetOdds.STREET) in twoBin)
+        self.assertTrue(Outcome("corner (1, 2, 4, 5)", BetOdds.CORNER) in twoBin)
+        self.assertTrue(Outcome("corner (2, 3, 5, 6)", BetOdds.CORNER) in twoBin)
 
-        self.assertTrue(Outcome("corner (1, 2, 4, 5)", BetOdds.STREET) in fiveBin)
-        self.assertTrue(Outcome("corner (2, 3, 5, 6)", BetOdds.STREET) in fiveBin)
-        self.assertTrue(Outcome("corner (4, 5, 7, 8)", BetOdds.STREET) in fiveBin)
-        self.assertTrue(Outcome("corner (5, 6, 8, 9)", BetOdds.STREET) in fiveBin)
+        self.assertTrue(Outcome("corner (1, 2, 4, 5)", BetOdds.CORNER) in fiveBin)
+        self.assertTrue(Outcome("corner (2, 3, 5, 6)", BetOdds.CORNER) in fiveBin)
+        self.assertTrue(Outcome("corner (4, 5, 7, 8)", BetOdds.CORNER) in fiveBin)
+        self.assertTrue(Outcome("corner (5, 6, 8, 9)", BetOdds.CORNER) in fiveBin)
+
+    def testLineBets(self):
+        (binBuilder, wheel) = self.init()
+        binBuilder.lineBets()
+        oneBin = wheel.get(1)
+        fourBin = wheel.get(4)
+
+        self.assertTrue(Outcome("line (1, 2, 3, 4, 5, 6)", BetOdds.LINE) in oneBin)
+        self.assertEqual(len(oneBin), 1)
+
+        self.assertTrue(Outcome("line (1, 2, 3, 4, 5, 6)", BetOdds.LINE) in fourBin)
+        self.assertTrue(Outcome("line (4, 5, 6, 7, 8, 9)", BetOdds.LINE) in fourBin)
+        self.assertEqual(len(fourBin), 2)
