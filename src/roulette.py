@@ -4,8 +4,10 @@ from enum import Enum
 
 
 class BetOdds(Enum):
-    STRAIGHT_BET = 35
-    SPLIT_BET = 17
+    STRAIGHT = 35
+    SPLIT = 17
+    STREET = 11
+    CORNER = 8
 
 
 @dataclass(frozen=True)
@@ -48,29 +50,37 @@ class BinBuilder():
     def __init__(self, wheel: Wheel):
         self.wheel = wheel
 
-    def generateStraightBets(self):
+    def straightBets(self):
         for i in range(37):
-            outcome = Outcome(f"{i}", BetOdds.STRAIGHT_BET)
+            outcome = Outcome(f"{i}", BetOdds.STRAIGHT)
             self.wheel.addOutcome(i, outcome)
 
-        straightBetZeroZeroOutcome = Outcome("00", BetOdds.STRAIGHT_BET)
+        straightBetZeroZeroOutcome = Outcome("00", BetOdds.STRAIGHT)
         self.wheel.addOutcome(37, straightBetZeroZeroOutcome)
 
-    def generateSplitBets(self):
+    def splitBets(self):
         middleCol = [i for i in range(2, 36, 3)]
         for n in middleCol:
-            leftSplit = Outcome(f"split {n - 1},{n}", BetOdds.SPLIT_BET)
+            leftSplit = Outcome(f"split {n - 1},{n}", BetOdds.SPLIT)
             self.wheel.addOutcome(n - 1, leftSplit)
             self.wheel.addOutcome(n, leftSplit)
 
-            rightSplit = Outcome(f"split {n},{n + 1}", BetOdds.SPLIT_BET)
+            rightSplit = Outcome(f"split {n},{n + 1}", BetOdds.SPLIT)
             self.wheel.addOutcome(n, rightSplit)
             self.wheel.addOutcome(n + 1, rightSplit)
 
         for n in range(4, 37):
-            upDownSplit = Outcome(f"split {n - 3},{n}", BetOdds.SPLIT_BET)
+            upDownSplit = Outcome(f"split {n - 3},{n}", BetOdds.SPLIT)
             self.wheel.addOutcome(n - 3, upDownSplit)
             self.wheel.addOutcome(n, upDownSplit)
 
-    def generateStreetBets(self):
+    def streetBets(self):
+        for i in range(12):
+            jump = 3 * i
+            relevantNums = (1 + jump, 2 + jump, 3 + jump)
+            street = Outcome(f"street {str(relevantNums)}", BetOdds.STREET)
+            for num in relevantNums:
+                self.wheel.addOutcome(num, street)
+
+    def cornerBets(self):
         pass
