@@ -20,7 +20,7 @@ class Outcome:
     name: str
     odds: BetOdds
 
-    def winAmount(self, amount: int):
+    def winAmount(self, amount: int) -> int:
         return self.odds * amount
 
 
@@ -28,27 +28,27 @@ class Bin(set):
     pass
 
 
-class Wheel():
+class Wheel:
     def __init__(self):
         self.bins = tuple(Bin() for i in range(38))
         self.rng = random.Random()
 
-    def get(self, number: int):
+    def get(self, number: int) -> Outcome:
         return self.bins[number]
 
-    def addOutcome(self, number: int, outcome: Outcome):
+    def addOutcome(self, number: int, outcome: Outcome) -> None:
         self.bins[number].add(outcome)
 
-    def next(self):
+    def next(self) -> Outcome:
         randIndex = self.rng.randint(0, 37)
         return self.bins[randIndex]
 
 
-class BinBuilder():
+class BinBuilder:
     def __init__(self, wheel: Wheel):
         self.wheel = wheel
 
-    def buildBins(self):
+    def buildBins(self) -> None:
         self.straightBets()
         self.splitBets()
         self.streetBets()
@@ -59,7 +59,7 @@ class BinBuilder():
         self.evenMoneyBets()
         self.fiveBet()
 
-    def straightBets(self):
+    def straightBets(self) -> None:
         for i in range(37):
             outcome = Outcome(f"{i}", BetOdds.STRAIGHT)
             self.wheel.addOutcome(i, outcome)
@@ -67,7 +67,7 @@ class BinBuilder():
         straightBetZeroZeroOutcome = Outcome("00", BetOdds.STRAIGHT)
         self.wheel.addOutcome(37, straightBetZeroZeroOutcome)
 
-    def splitBets(self):
+    def splitBets(self) -> None:
         middleCol = [i for i in range(2, 36, 3)]
         for n in middleCol:
             leftSplit = Outcome(f"split {n - 1},{n}", BetOdds.SPLIT)
@@ -83,7 +83,7 @@ class BinBuilder():
             self.wheel.addOutcome(n - 3, upDownSplit)
             self.wheel.addOutcome(n, upDownSplit)
 
-    def streetBets(self):
+    def streetBets(self) -> None:
         for i in range(12):
             jump = 3 * i
             relevantNums = (1 + jump, 2 + jump, 3 + jump)
@@ -91,7 +91,7 @@ class BinBuilder():
             for num in relevantNums:
                 self.wheel.addOutcome(num, street)
 
-    def cornerBets(self):
+    def cornerBets(self) -> None:
         for i in range(1, 32, 3):
             for j in range(2):
                 cornerNums = self.__createCornerFromTopLeft(i + j)
@@ -99,31 +99,31 @@ class BinBuilder():
                 for num in cornerNums:
                     self.wheel.addOutcome(num, corner)
 
-    def __createCornerFromTopLeft(self, i):
+    def __createCornerFromTopLeft(self, i) -> tuple:
         return i, i + 1, i + 3, i + 4
 
-    def lineBets(self):
+    def lineBets(self) -> None:
         for i in range(1, 32, 3):
             lineNums = tuple(i + j for j in range(6))
             line = Outcome(f"line {str(lineNums)}", BetOdds.LINE)
             for num in lineNums:
                 self.wheel.addOutcome(num, line)
 
-    def dozenBets(self):
+    def dozenBets(self) -> None:
         for i in range(3):
             dozenNums = tuple(k + 1 for k in range(i * 12, i * 12 + 12))
             dozen = Outcome(f"dozen {str(dozenNums)}", BetOdds.DOZEN)
             for num in dozenNums:
                 self.wheel.addOutcome(num, dozen)
 
-    def columnBets(self):
+    def columnBets(self) -> None:
         for i in range(3):
             columnNums = tuple(j for j in range(i + 1, 35 + i, 3))
             column = Outcome(f"column {str(columnNums)}", BetOdds.COLUMN)
             for num in columnNums:
                 self.wheel.addOutcome(num, column)
 
-    def evenMoneyBets(self):
+    def evenMoneyBets(self) -> None:
         redNums = (1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36)
         red = Outcome(f"red", BetOdds.EVEN_MONEY)
         for num in redNums:
@@ -154,7 +154,7 @@ class BinBuilder():
         for num in highNums:
             self.wheel.addOutcome(num, high)
 
-    def fiveBet(self):
+    def fiveBet(self) -> None:
         fiveBetNums = [0, 37, 1, 2, 3]
         fiveBet = Outcome('fiveBet', BetOdds.FIVE_BET)
         for num in fiveBetNums:

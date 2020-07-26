@@ -6,7 +6,7 @@ class TestBinBuilder(TestCase):
     def __init(self):
         w = Wheel()
         a = BinBuilder(w)
-        return (a, w)
+        return a, w
 
     def testInit(self):
         w = Wheel()
