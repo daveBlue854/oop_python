@@ -14,8 +14,24 @@ class testBinBuilder(TestCase):
         self.assertEqual(type(binBuilder), type(BinBuilder(w)))
         self.assertEqual(type(binBuilder.wheel.get(0)), type(Bin()))
 
-    def testBinBuild(self):
-        self.assertTrue(True)
+    def testBuildBin(self):
+        (binBuilder, wheel) = self.__init()
+        binBuilder.buildBins()
+        oneBin = wheel.get(1)
+        oneBinOutcomes = [Outcome('red', BetOdds.EVEN_MONEY),
+                          Outcome('odd', BetOdds.EVEN_MONEY),
+                          Outcome('low', BetOdds.EVEN_MONEY),
+                          Outcome("1", BetOdds.STRAIGHT),
+                          Outcome("split 1,2", BetOdds.SPLIT),
+                          Outcome("split 1,4", BetOdds.SPLIT),
+                          Outcome("street (1, 2, 3)", BetOdds.STREET),
+                          Outcome("corner (1, 2, 4, 5)", BetOdds.CORNER),
+                          Outcome("line (1, 2, 3, 4, 5, 6)", BetOdds.LINE),
+                          Outcome('dozen (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)', BetOdds.DOZEN),
+                          Outcome('column (1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34)', BetOdds.COLUMN),
+                          Outcome('fiveBet', BetOdds.FIVE_BET)
+                          ]
+        self.assertCountEqual(oneBinOutcomes, oneBin)
 
     def testStraightBets(self, ):
         (binBuilder, wheel) = self.__init()

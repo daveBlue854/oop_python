@@ -56,7 +56,15 @@ class BinBuilder():
         self.wheel = wheel
 
     def buildBins(self):
-        pass
+        self.straightBets()
+        self.splitBets()
+        self.streetBets()
+        self.cornerBets()
+        self.lineBets()
+        self.dozenBets()
+        self.columnBets()
+        self.evenMoneyBets()
+        self.fiveBet()
 
     def straightBets(self):
         for i in range(37):
