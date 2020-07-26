@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 import random
-from enum import Enum
+from enum import IntFlag
 
 
-class BetOdds(Enum):
+class BetOdds(IntFlag):
     STRAIGHT = 35
     SPLIT = 17
     STREET = 11
@@ -18,20 +18,13 @@ class BetOdds(Enum):
 @dataclass(frozen=True)
 class Outcome:
     name: str
-    odds: int
+    odds: BetOdds
 
     def winAmount(self, amount: int):
         return self.odds * amount
 
 
 class Bin(set):
-    """
-    whats going on?
-     I thought this should extend 'frozenset'
-    but then I could not implement addOutcome
-    method on Wheel.
-    not sure if i did something wrong but for now lets roll
-    """
     pass
 
 

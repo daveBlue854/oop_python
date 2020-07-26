@@ -2,7 +2,7 @@ from unittest import TestCase
 from src.roulette import Wheel, BinBuilder, Bin, Outcome, BetOdds
 
 
-class testBinBuilder(TestCase):
+class TestBinBuilder(TestCase):
     def __init(self):
         w = Wheel()
         a = BinBuilder(w)
