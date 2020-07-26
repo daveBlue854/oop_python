@@ -32,11 +32,16 @@ class Wheel:
     def __init__(self):
         self.bins = tuple(Bin() for i in range(38))
         self.rng = random.Random()
+        self.allOutcomes = dict()
 
-    def get(self, number: int) -> Outcome:
+    def getOutcomeByIndex(self, number: int) -> Outcome:
         return self.bins[number]
 
+    def getOutcomeByName(self, name: str) -> Outcome:
+        return self.allOutcomes[name]
+
     def addOutcome(self, number: int, outcome: Outcome) -> None:
+        self.allOutcomes[outcome.name] = outcome
         self.bins[number].add(outcome)
 
     def next(self) -> Outcome:
@@ -159,3 +164,22 @@ class BinBuilder:
         fiveBet = Outcome('fiveBet', BetOdds.FIVE_BET)
         for num in fiveBetNums:
             self.wheel.addOutcome(num, fiveBet)
+
+
+class Bet:
+    """
+    The collected notion of a:
+    (1)Player, placing an
+    (2)amount on an
+    (3)Outcome
+    """
+
+    def __init__(self, amount: int, outcome: Outcome):
+        self.amount = amount
+        self.outcome = outcome
+
+    def winAmont(self):
+        return self.amount + self.outcome.winAmount(self.amount)
+
+    def loseAmount(self):
+        return self.amount

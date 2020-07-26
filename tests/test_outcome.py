@@ -35,3 +35,4 @@ class TestOutcome(TestCase):
     def testWinAmount(self):
         o1 = Outcome('red', 2)
         self.assertEqual(o1.winAmount(3), 6)
+

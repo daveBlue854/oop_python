@@ -5,17 +5,17 @@ from src.roulette import Wheel, Outcome, Bin
 
 
 class testWheel(unittest.TestCase):
-    def test_ShouldHaveThirtyEightBins(self):
+    def testInit(self):
         w = Wheel()
         self.assertEqual(len(w.bins), 38)
 
-    def test_shouldAddAOutcomeToBinWhenCallingAddOutcome(self):
+    def testAddOutcome(self):
         w = Wheel()
         o = Outcome('red', 1)
         w.addOutcome(5, o)
-        self.assertEqual(Bin({o}), w.get(5))
+        self.assertEqual(Bin({o}), w.getOutcomeByIndex(5))
 
-    def test_sholdGetRandomBinWhenCallingChoose(self):
+    def testNext(self):
         w = Wheel()
         next = w.next()
         self.assertEqual(type(next), type(Bin()))
@@ -34,6 +34,15 @@ class testWheel(unittest.TestCase):
         # act+assert
         for i in range(10):
             self.assertEqual(w.next(), Bin({outcomes[i]}))
+
+    def testGetOutcomeByName(self):
+        # arrange
+        w = Wheel()
+        o = Outcome('red', 1)
+        # act
+        w.addOutcome(5, o)
+        # assert
+        self.assertEqual(o, w.getOutcomeByName('red'))
 
 
 if __name__ == '__main__':
