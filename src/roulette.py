@@ -1,6 +1,10 @@
 from dataclasses import dataclass
 import random
 from enum import IntFlag
+from functools import reduce
+
+TABLE_LIMIT = 300
+TABLE_MINIMUM = 5
 
 
 class BetOdds(IntFlag):
@@ -183,3 +187,33 @@ class Bet:
 
     def loseAmount(self):
         return self.amount
+
+
+class InvalidBet(Exception):
+    pass
+
+
+class Table:
+    limit = TABLE_LIMIT
+    minimum = TABLE_MINIMUM
+
+    def __init__(self, bets=[]):
+        self.bets = bets
+
+    def placeBet(self, bet: Bet):
+        self.bets.append(bet)
+        try:
+            self.isValid()
+        except InvalidBet as e:
+            self.bets.remove(bet)
+            raise e
+
+    def isValid(self):
+        tabelBetsSum = reduce(lambda sum, b: sum + b.amount, self.bets, 0)
+        if tabelBetsSum > TABLE_LIMIT:
+            raise InvalidBet(f'Table Bets is {tabelBetsSum} which is higher than table limit which is {TABLE_LIMIT}')
+        elif tabelBetsSum < TABLE_MINIMUM:
+            raise InvalidBet(f'Table Bets is {tabelBetsSum} which is lower than table minimum which is {TABLE_MINIMUM}')
+
+    def __iter__(self):
+        pass
