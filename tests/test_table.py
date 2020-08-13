@@ -21,3 +21,9 @@ class testTable(TestCase):
         t = Table(betList)
         with self.assertRaises(InvalidBet):
             t.isValid()
+
+    def testIter(self):
+        betList = [Bet(30, outcome), Bet(10, outcome), Bet(5, outcome)]
+        t = Table(betList)
+        for i, el in enumerate(t):
+            self.assertEqual(betList[i], el)

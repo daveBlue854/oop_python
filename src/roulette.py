@@ -216,4 +216,4 @@ class Table:
             raise InvalidBet(f'Table Bets is {tabelBetsSum} which is lower than table minimum which is {TABLE_MINIMUM}')
 
     def __iter__(self):
-        pass
+        return self.bets.__iter__()
