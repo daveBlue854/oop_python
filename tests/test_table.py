@@ -16,8 +16,14 @@ class testTable(TestCase):
         with self.assertRaises(InvalidBet):
             t.placeBet(ilegalBet)
 
-    def testIsValid(self):
+    def testIsValidOverLimit(self):
         betList = [Bet(TABLE_LIMIT + 1, outcome)]
+        t = Table(betList)
+        with self.assertRaises(InvalidBet):
+            t.isValid()
+
+    def testIsValidUnderMinimum(self):
+        betList = [Bet(TABLE_MINIMUM - 0.1, outcome)]
         t = Table(betList)
         with self.assertRaises(InvalidBet):
             t.isValid()
@@ -27,3 +33,8 @@ class testTable(TestCase):
         t = Table(betList)
         for i, el in enumerate(t):
             self.assertEqual(betList[i], el)
+
+    def testStr(self):
+        betList = [Bet(30, outcome)]
+        t = Table(betList)
+        self.assertEqual(str(t), "Bets list: ['Outcome: red, odds are 1, amount: 30']")

@@ -27,6 +27,9 @@ class Outcome:
     def winAmount(self, amount: int) -> int:
         return self.odds * amount
 
+    def __str__(self):
+        return f'{self.name}, odds are {self.odds}'
+
 
 class Bin(set):
     pass
@@ -188,6 +191,9 @@ class Bet:
     def loseAmount(self):
         return self.amount
 
+    def __str__(self):
+        return f'Outcome: {self.outcome}, amount: {self.amount}'
+
 
 class InvalidBet(Exception):
     pass
@@ -217,3 +223,8 @@ class Table:
 
     def __iter__(self):
         return self.bets.__iter__()
+
+    def __str__(self):
+        s = 'Bets list: '
+        betsList = [str(bet) for bet in self.bets]
+        return s + str(betsList)

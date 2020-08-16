@@ -11,7 +11,7 @@ class TestOutcome(TestCase):
 
     def testStr(self):
         o = Outcome('red', 1)
-        self.assertEqual(str(o), "Outcome(name='red', odds=1)")
+        self.assertEqual(str(o), "red, odds are 1")
 
     def testRepr(self):
         o = Outcome('red', 1)
