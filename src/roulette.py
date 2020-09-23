@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import random
 from enum import IntFlag
 from functools import reduce
+from typing import List
 
 TABLE_LIMIT = 300
 TABLE_MINIMUM = 5
@@ -51,7 +52,7 @@ class Wheel:
         self.allOutcomes[outcome.name] = outcome
         self.bins[number].add(outcome)
 
-    def next(self) -> Outcome:
+    def next(self) -> Bin:
         randIndex = self.rng.randint(0, 37)
         return self.bins[randIndex]
 
@@ -203,7 +204,7 @@ class Table:
     limit = TABLE_LIMIT
     minimum = TABLE_MINIMUM
 
-    def __init__(self, bets=[]):
+    def __init__(self, bets: List[Bet] = []):
         self.bets = bets
 
     def placeBet(self, bet: Bet):
@@ -243,6 +244,50 @@ class Passenger57:
 
     def win(self, bet: Bet) -> None:
         moneyWon = bet.winAmont()
+        print(f'we have won {moneyWon}')
 
     def lose(self, bet: Bet) -> None:
         moneyLost = bet.loseAmount()
+        print(f'we have lost {moneyLost}')
+
+
+@dataclass()
+class Game():
+    wheel: Wheel
+    table: Table
+
+    def cycle(self, player: Passenger57):
+        player.placeBets()
+        binTheWheelGot = self.wheel.next()
+        for bet in self.table:
+            if bet.outcome in binTheWheelGot:
+                player.win(bet)
+            else:
+                player.lose(bet)
+        self.table.bets = []
+
+
+class Demo():
+    def __init__(self):
+        pass
+
+    def run(self):
+        w = Wheel()
+        binBuilder = BinBuilder(w)
+        binBuilder.buildBins()
+        t = Table([])
+        g = Game(w, t)
+        p1 = Passenger57(t, w)
+        g.cycle(p1)
+        g.cycle(p1)
+        g.cycle(p1)
+        g.cycle(p1)
+        g.cycle(p1)
+        g.cycle(p1)
+        g.cycle(p1)
+        g.cycle(p1)
+        g.cycle(p1)
+
+
+d = Demo()
+d.run()

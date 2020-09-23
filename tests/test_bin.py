@@ -4,6 +4,7 @@ from src.roulette import Bin
 
 
 class testBin(TestCase):
+
     def testBinElements(self):
         outcomes = {Outcome('red', 2), Outcome('blue', 3)}
         b = Bin(outcomes)
