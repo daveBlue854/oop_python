@@ -24,16 +24,14 @@ class testWheel(unittest.TestCase):
         # arrange
         pseudoRandom = random.Random()
         pseudoRandom.seed(1)
-        randomIndices = [pseudoRandom.randint(0, 37) for i in range(10)]
+        randomIndices = [pseudoRandom.randint(0, 37) for _ in range(10)]
         outcomes = [Outcome(i, 1) for i in range(10)]
+        zipped = zip(randomIndices, outcomes)
         w = Wheel()
-        for i in range(10):
-            w.addOutcome(randomIndices[i], outcomes[i])
-
+        for z in zipped: w.addOutcome(z[0], z[1])
         w.rng.seed(1)
         # act+assert
-        for i in range(10):
-            self.assertEqual(w.next(), Bin({outcomes[i]}))
+        for _ in zipped: self.assertEqual(w.next(), Bin({outcomes[i]}))
 
     def testGetOutcomeByName(self):
         # arrange
