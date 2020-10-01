@@ -1,5 +1,9 @@
 from unittest import TestCase
-from src.roulette import Table, Bet, Outcome, BetOdds, TABLE_LIMIT, TABLE_MINIMUM, InvalidBet
+
+from src.Bet import Bet, InvalidBet
+from src.BetOdds import BetOdds
+from src.Outcome import Outcome
+from src.Table import Table, TABLE_LIMIT, TABLE_MINIMUM
 
 outcome = Outcome('red', BetOdds.EVEN_MONEY)
 

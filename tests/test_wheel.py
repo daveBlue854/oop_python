@@ -1,7 +1,9 @@
 import unittest
 import random
 
-from src.roulette import Wheel, Outcome, Bin
+from src.Bin import Bin
+from src.Outcome import Outcome
+from src.Wheel import Wheel
 
 
 class testWheel(unittest.TestCase):

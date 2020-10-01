@@ -1,5 +1,7 @@
 from unittest import TestCase
-from src.roulette import Bet, Outcome
+
+from src.Bet import Bet
+from src.Outcome import Outcome
 
 
 class TestBet(TestCase):

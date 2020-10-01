@@ -1,6 +1,11 @@
 import unittest
 from unittest.mock import MagicMock
-from src.roulette import Game, Wheel, Table, Passenger57, BinBuilder, Bin
+
+from src.Bin import Bin
+from src.BinBuilder import BinBuilder
+from src.Table import Table
+from src.Wheel import Wheel
+from src.roulette import Passenger57, Game
 
 
 class TestGame(unittest.TestCase):

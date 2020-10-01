@@ -1,5 +1,10 @@
 from unittest import TestCase
-from src.roulette import Wheel, BinBuilder, Bin, Outcome, BetOdds
+
+from src.BetOdds import BetOdds
+from src.Bin import Bin
+from src.BinBuilder import BinBuilder
+from src.Outcome import Outcome
+from src.Wheel import Wheel
 
 
 class TestBinBuilder(TestCase):

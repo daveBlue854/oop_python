@@ -1,6 +1,7 @@
 from unittest import TestCase
-from src.roulette import Outcome
-from src.roulette import Bin
+
+from src.Bin import Bin
+from src.Outcome import Outcome
 
 
 class testBin(TestCase):

@@ -1,0 +1,2 @@
+class Bin(set):
+    pass

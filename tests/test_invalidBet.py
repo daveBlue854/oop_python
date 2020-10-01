@@ -1,5 +1,6 @@
 from unittest import TestCase
-from src.roulette import InvalidBet
+
+from src.Bet import InvalidBet
 
 
 def brokenFunction():
