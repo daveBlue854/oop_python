@@ -6,7 +6,7 @@ from src.Outcome import Outcome
 
 class Wheel:
     def __init__(self):
-        self.bins = tuple(Bin() for i in range(38))
+        self.bins = tuple(Bin() for _ in range(38))
         self.rng = random.Random()
         self.allOutcomes = dict()
 

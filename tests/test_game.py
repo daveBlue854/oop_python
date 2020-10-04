@@ -11,12 +11,12 @@ from src.roulette import Passenger57, Game
 class TestGame(unittest.TestCase):
 
     @classmethod
-    def setUpClass(cls) -> None:
-        cls.w = Wheel()
-        binBuilder = BinBuilder(cls.w)
+    def setUp(self) -> None:
+        self.w = Wheel()
+        binBuilder = BinBuilder(self.w)
         binBuilder.buildBins()
-        cls.t = Table([])
-        cls.g = Game(cls.w, cls.t)
+        self.t = Table([])
+        self.g = Game(self.t, self.w)
 
     def test_init(self):
         self.assertTrue(type(self.g) == Game)
@@ -25,6 +25,7 @@ class TestGame(unittest.TestCase):
         p1 = Passenger57(self.t, self.w)
         p1.placeBets = MagicMock()
         self.w.next = MagicMock(return_value=self.w.getOutcomeByName('black'))
+        p1.isPlaying = MagicMock(return_value=True)
 
         self.g.cycle(p1)
 
@@ -37,6 +38,7 @@ class TestGame(unittest.TestCase):
         p1.lose = MagicMock()
         black = self.w.getOutcomeByName('black')
         self.w.next = MagicMock(return_value=Bin([black]))
+        p1.isPlaying = MagicMock(return_value=True)
 
         self.g.cycle(p1)
 
@@ -46,6 +48,15 @@ class TestGame(unittest.TestCase):
     def testMockWheel(self):
         self.w.next = MagicMock(return_value=self.w.getOutcomeByName('black'))
         self.assertTrue(self.w.next().name == 'black')
+
+    def testIsPlaying(self):
+        p1 = Passenger57(self.t, self.w)
+        p1.isPlaying = MagicMock(return_value=False)
+        p1.placeBets = MagicMock()
+        self.w.next = MagicMock(return_value=self.w.getOutcomeByName('black'))
+
+        self.g.cycle(p1)
+        p1.placeBets.assert_not_called()
 
 
 if __name__ == '__main__':

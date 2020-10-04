@@ -2,15 +2,16 @@ from dataclasses import dataclass
 
 from src.Bet import Bet
 from src.BinBuilder import BinBuilder
+from src.Player import Player
 from src.Table import Table
 from src.Wheel import Wheel
 
 
-class Passenger57:
+class Passenger57(Player):
     BLACK_OUTCOME_NAME = 'black'
 
     def __init__(self, table: Table, wheel: Wheel) -> None:
-        self.table = table
+        super().__init__(table, wheel)
         self.black = wheel.getOutcomeByName(Passenger57.BLACK_OUTCOME_NAME)
 
     def placeBets(self) -> None:
@@ -28,10 +29,11 @@ class Passenger57:
 
 @dataclass()
 class Game():
-    wheel: Wheel
     table: Table
+    wheel: Wheel
 
-    def cycle(self, player: Passenger57):
+    def cycle(self, player: Player):
+        if not player.isPlaying(): return
         player.placeBets()
         binTheWheelGot = self.wheel.next()
         for bet in self.table:
