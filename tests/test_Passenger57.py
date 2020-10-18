@@ -1,4 +1,5 @@
 from unittest import TestCase
+from src.Bet import Bet
 from src.roulette import *
 
 
