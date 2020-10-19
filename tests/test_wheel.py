@@ -15,7 +15,7 @@ class testWheel(unittest.TestCase):
         w = Wheel()
         o = Outcome('red', 1)
         w.addOutcome(5, o)
-        self.assertEqual(Bin({o}), w.getOutcomeByIndex(5))
+        self.assertEqual(Bin({o}), w.getBinByIndex(5))
 
     def testNext(self):
         w = Wheel()

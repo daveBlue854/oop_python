@@ -10,8 +10,9 @@ class Wheel:
         self.rng = random.Random()
         self.allOutcomes = dict()
 
-    def getOutcomeByIndex(self, number: int) -> Outcome:
-        return self.bins[number]
+    def getBinByIndex(self, number: int) -> Outcome:
+        ret = self.bins[number]
+        return ret
 
     def getOutcomeByName(self, name: str) -> Outcome:
         return self.allOutcomes[name]

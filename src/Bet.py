@@ -9,7 +9,7 @@ class Bet:
     (3)Outcome
     """
 
-    def __init__(self, amount: int, outcome: Outcome):
+    def __init__(self, amount: int, outcome: Outcome) -> object:
         self.amount = amount
         self.outcome = outcome
 

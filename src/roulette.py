@@ -14,7 +14,7 @@ class Demo():
         binBuilder = BinBuilder(w)
         binBuilder.buildBins()
         t = Table([])
-        g = Game(w, t)
+        g = Game(t, w)
         p1 = Passenger57(t, w)
         g.cycle(p1)
         g.cycle(p1)
