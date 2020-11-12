@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import dataclasses
 from typing import List
 
 from src.Game import Game
@@ -7,10 +8,10 @@ from src.Player import Player
 
 @dataclass
 class Simulator:
-    duration: int
-    stake: int
-    samples: int
-    maxima: List[int]
-    durations: List[int]
     player: Player
     game: Game
+    playerDuration: int = 250
+    playerStakeMult: int = 100
+    samples: int = 50
+    maximums: List[int] = dataclasses.field(default_factory=list)
+    durations: List[int] = dataclasses.field(default_factory=list)
